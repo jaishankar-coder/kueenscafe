@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Kueen's Cafe | Delicious Food, Delivered</title>
+    <style>
+        html, body {
+            overflow-x: hidden;
+        }
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        :root {
+            --primary: #FF6B35;
+            --secondary: #2EC4B6;
+         --dark: #0f1c3d; 
+            --light: #FDFFFC;
+            --accent: #F9CB40;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(to bottom, #ffc57f, #fffde3);
+            color: var(--dark);
+            padding: 0 1.6rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            width: 100px;
+            height: 120px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            background-color: var(--dark);
+            border-radius: 0 0 50% 50%;
+            padding: 0 10px 10px 10px;
+            position: relative;
+            top: 0;
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 1.1rem;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .order-button {
+            background-color: var(--primary);
+            color: var(--light);
+            border: none;
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            height: 45px;
+        }
+        
+        .order-button:hover {
+            background-color: #ff8a5e;
+            transform: scale(1.1);
+        }
+
+        .zomato-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+        }
+        .zomato-icon {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 0px;
+            /*box-shadow: 0 2px 8px rgba(0,0,0,0.07);*/
+            padding: 0px;
+            margin-right: 0;
+        }
+        
+        .hero {
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            position: 5px 0px;
+            overflow: hidden;
+        }
+        
+        .hero-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .hero-slide.active {
+            opacity: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            color: #f0f0f0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .cta-button {
+            background-color: var(--primary);
+            color: var(--light);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Add container class for sections that need constrained content */
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+        
+        /* Full-width sections with background colors */
+        .serving-on-section,
+        .popular-dishes-section,
+        .testimonials,
+        .contact {
+            width: 100%;
+            padding: 5rem 0;
+        }
+        
+        /* Sections that need constrained content */
+        #how-it-works,
+        #about {
+            background-color: var(--light);
+        }
+        
+        #how-it-works .section-container,
+        #about .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: var(--dark);
+        }
+        
+        .how-it-works .section-title,
+        #about .section-title,
+        .contact .section-title {
+            color: var(--dark);
+        }
+        
+        .testimonials .section-title {
+            color: var(--light);
+        }
+        
+        .how-it-works {
+            background-color: var(--light);
+        }
+        
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .step-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .step h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .testimonials {
+            background-color: var(--dark);
+            color: var(--light);
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .testimonial {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonial-author {
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .quote-icon {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            opacity: 0.2;
+        }
+        
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 3rem;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            height: 400px;
+            background: url('/api/placeholder/600/400') center/cover;
+            border-radius: 10px;
+        }
+        
+        .about-text h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .contact {
+            background-color: #f8f8f8;
+        }
+        
+        .contact-flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+        }
+        
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .comments-section {
+            flex: 2;
+            min-width: 300px;
+        }
+        
+        .comments-list {
+            margin-top: 2rem;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 1rem;
+        }
+
+        .comment {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .comment-author {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .comment-date {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .comment-content {
+            color: var(--dark);
+            line-height: 1.5;
+        }
+
+        .comments-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .comments-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .comments-list::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        .comments-list::-webkit-scrollbar-thumb:hover {
+            background: #ff8a5e;
+        }
+        
+        .contact-method {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-right: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .submit-button {
+            background-color: var(--primary);
+            color: var(--light);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-button:hover {
+            background-color: #ff8a5e;
+            transform: scale(1.1);
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-section h4 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            padding: 10px;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--primary);
+            transform: scale(1.1);
+        }
+        
+        .social-icon-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .copyright {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+                color: var(--light);
+            }
+            
+            .nav-links {
+                display: none;
+            }
+
+            #about {
+                padding-bottom: 0;
+            }
+
+            .contact {
+                padding-top: 2rem;
+            }
+
+            .hero {
+                padding-top: 0 !important;
+                height: auto !important;
+                min-height: 60vh !important;
+            }
+        }
+        
+        #menu-slider-section {
+            background: transparent;
+            padding: 4rem 0 2rem 0;
+        }
+        .menu-categories {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .menu-category {
+            margin-bottom: 3rem;
+        }
+
+        .menu-category h3 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+            font-weight: 600;
+        }
+
+        .menu-category h3::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: var(--primary);
+            margin: 0.5rem auto;
+        }
+
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            padding: 0.5rem;
+        }
+
+        .menu-item {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            height: 100%;
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .menu-item:hover::before {
+            opacity: 1;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .menu-item-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            text-align: center;
+            padding-top: 1rem;
+        }
+
+        .menu-item-details {
+            padding: 1rem;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .menu-item-details h4 {
+            color: var(--dark);
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+        }
+
+        .menu-item-details p {
+            color: #666;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .price {
+            display: inline-block;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.1rem;
+            background: rgba(255, 107, 53, 0.1);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .menu-categories {
+                gap: 0.5rem;
+                margin-bottom: 2rem;
+            }
+            
+            .category-btn {
+                padding: 0.75rem 1rem;
+                min-width: 80px;
+            }
+            
+            .category-icon {
+                font-size: 1.5rem;
+            }
+            
+            .category-name {
+                font-size: 0.8rem;
+            }
+            
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 0 1rem;
+            }
+            
+            .menu-item {
+                padding: 1.25rem;
+            }
+            
+            .menu-item-title {
+                font-size: 1.1rem;
+            }
+            
+            .menu-item-price {
+                font-size: 0.9rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .menu-categories {
+                justify-content: space-between;
+                gap: 0.25rem;
+            }
+            
+            .category-btn {
+                padding: 0.5rem 0.75rem;
+                min-width: 70px;
+            }
+            
+            .category-icon {
+                font-size: 1.25rem;
+            }
+            
+            .category-name {
+                font-size: 0.75rem;
+            }
+            
+            .menu-item-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .menu-item-price {
+                margin-left: 0;
+                align-self: flex-start;
+            }
+        }
+
+        /* Show desktop menu only on desktop, mobile menu only on mobile */
+        .desktop-menu { display: block; }
+        .mobile-menu { display: none; }
+        @media (max-width: 768px) {
+            .desktop-menu { display: none !important; }
+            .mobile-menu { display: block !important; }
+        }
+
+        /* --- OLD MENU STYLES FOR MOBILE --- */
+        .menu-modern-section {
+            background: #f6fcfa;
+            border-radius: 18px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            padding: 2rem 1rem;
+            margin: 2rem auto 3rem auto;
+            max-width: 1100px;
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+        
+        .menu-sidebar {
+            min-width: 180px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+            padding: 1rem 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .menu-sidebar-title {
+            color: var(--primary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .menu-category-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            background: none;
+            border: none;
+            outline: none;
+            font-size: 1.08rem;
+            color: #222;
+            padding: 0.6rem 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        
+        .menu-category-btn.selected {
+            background: rgba(255, 107, 53, 0.1);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .menu-category-btn .icon {
+            font-size: 1.3rem;
+        }
+        
+        .menu-items-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 1.2rem;
+        }
+        
+        .menu-card {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+            padding: 1.1rem 1rem 0.7rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            min-height: 140px;
+            position: relative;
+        }
+        
+        .menu-card .menu-card-title {
+            font-size: 1.08rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+            color: #222;
+        }
+        
+        .menu-card .menu-card-desc {
+            font-size: 0.93rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .menu-card .menu-card-price {
+            font-size: 1.05rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin-top: auto;
+        }
+        
+        .mobile-collapse {
+            display: none;
+        }
+        
+        .mobile-collapse.active {
+            display: block;
+        }
+        
+        /* Mobile responsive styles for old menu */
+        @media (max-width: 900px) {
+            .menu-modern-section {
+                flex-direction: column;
+                gap: 1.5rem;
+                padding: 1rem 0.5rem;
+                width: 100%;
+            }
+            .menu-sidebar {
+                flex-direction: row;
+                min-width: 0;
+                width: 100%;
+                overflow-x: auto;
+                gap: 0.5rem;
+                padding: 0.5rem 0.2rem;
+                border-radius: 12px;
+                box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+                margin-bottom: 0.5rem;
+            }
+            .menu-sidebar-title {
+                display: none;
+            }
+            .menu-category-btn {
+                min-width: 110px;
+                justify-content: center;
+                font-size: 0.98rem;
+                padding: 0.5rem 0.7rem;
+            }
+            .menu-items-grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+            .menu-card {
+                min-height: 100px;
+                padding: 0.7rem 0.7rem 0.5rem 0.7rem;
+                border-radius: 10px;
+            }
+            .menu-card .menu-card-title {
+                font-size: 1rem;
+            }
+            .menu-card .menu-card-desc {
+                font-size: 0.88rem;
+            }
+            .menu-card .menu-card-price {
+                font-size: 0.98rem;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .menu-modern-section {
+                flex-direction: column;
+                padding: 0.5rem 0.1rem;
+                margin: 0.5rem auto 1.2rem auto;
+                width: 100%;
+            }
+            .menu-sidebar {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                gap: 0.3rem;
+                padding: 0.2rem 0.1rem;
+                border-radius: 12px;
+                box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+                margin-bottom: 0.5rem;
+                min-width: 0;
+                overflow-x: unset;
+            }
+            .menu-category-btn {
+                min-width: 0;
+                width: 100%;
+                font-size: 1.18rem;
+                font-weight: 700;
+                padding: 1.1rem 0.5rem 1.1rem 0.5rem;
+                justify-content: center;
+                border-radius: 12px;
+                text-align: center;
+                background: #fff;
+                border: 1px solid #e6f7f0;
+                margin-bottom: 0;
+                transition: background 0.2s, color 0.2s;
+                display: flex;
+                align-items: center;
+                gap: 0.7rem;
+            }
+            .menu-category-btn .icon {
+                font-size: 2.1rem;
+                display: inline-block;
+                vertical-align: middle;
+            }
+            .menu-category-btn .cat-label {
+                font-size: 1.18rem;
+                font-weight: 700;
+                flex: 1;
+                text-align: center;
+                display: inline-block;
+            }
+            .menu-category-btn .cat-arrow {
+                font-size: 1.3rem;
+                margin-left: 0.5rem;
+                transition: transform 0.2s;
+                display: inline-block;
+            }
+            .menu-category-btn.active .cat-arrow {
+                transform: rotate(180deg);
+            }
+            .menu-category-btn.active {
+                background: #e6f7f0;
+                color: #1bbd7e;
+                font-weight: 700;
+            }
+            .mobile-collapse {
+                display: none;
+                background: #f8fdfb;
+                border-radius: 0 0 10px 10px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+                margin-bottom: 0.7rem;
+                padding: 0.7rem 0.5rem 0.5rem 1.2rem;
+                animation: fadeIn 0.2s;
+            }
+            .mobile-collapse.active {
+                display: block;
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(-10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .menu-items-grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+                width: 100%;
+            }
+            .menu-card {
+                min-height: 100px;
+                padding: 0.7rem 0.7rem 0.5rem 0.7rem;
+                border-radius: 10px;
+            }
+            .menu-card .menu-card-title {
+                font-size: 1rem;
+            }
+            .menu-card .menu-card-desc {
+                font-size: 0.88rem;
+            }
+            .menu-card .menu-card-price {
+                font-size: 0.98rem;
+            }
+        }
+
+        /* --- NEW MENU SECTION STYLES (DESKTOP) --- */
+        .desktop-menu .menu-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 4rem 0;
+        }
+
+        .desktop-menu .section-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Category Navigation */
+        .desktop-menu .menu-categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .desktop-menu .category-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 100px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .desktop-menu .category-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        .desktop-menu .category-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(255, 107, 53, 0.3);
+        }
+
+        .desktop-menu .category-icon {
+            font-size: 2rem;
+        }
+
+        .desktop-menu .category-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        /* Menu Grid */
+        .desktop-menu .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .desktop-menu .menu-item {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .desktop-menu .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .desktop-menu .menu-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .desktop-menu .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .desktop-menu .menu-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .desktop-menu .menu-item-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .desktop-menu .menu-item-price {
+            background: linear-gradient(135deg, var(--primary), #ff8a5e);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1rem;
+            white-space: nowrap;
+            margin-left: 1rem;
+        }
+
+        .desktop-menu .menu-item-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .desktop-menu .menu-item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .desktop-menu .menu-item-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .desktop-menu .menu-tag {
+            background: rgba(255, 107, 53, 0.1);
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .desktop-menu .menu-item-heart {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            padding: 0.5rem;
+        }
+
+        .desktop-menu .menu-item-heart:hover,
+        .desktop-menu .menu-item-heart.liked {
+            color: #ff4757;
+        }
+
+        /* Responsive Design for Desktop Menu (for consistency) */
+        @media (max-width: 768px) {
+            .desktop-menu .menu-categories {
+                gap: 0.5rem;
+                margin-bottom: 2rem;
+            }
+            
+            .desktop-menu .category-btn {
+                padding: 0.75rem 1rem;
+                min-width: 80px;
+            }
+            
+            .desktop-menu .category-icon {
+                font-size: 1.5rem;
+            }
+            
+            .desktop-menu .category-name {
+                font-size: 0.8rem;
+            }
+            
+            .desktop-menu .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 0 1rem;
+            }
+            
+            .desktop-menu .menu-item {
+                padding: 1.25rem;
+            }
+            
+            .desktop-menu .menu-item-title {
+                font-size: 1.1rem;
+            }
+            
+            .desktop-menu .menu-item-price {
+                font-size: 0.9rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .desktop-menu .menu-categories {
+                justify-content: space-between;
+                gap: 0.25rem;
+            }
+            
+            .desktop-menu .category-btn {
+                padding: 0.5rem 0.75rem;
+                min-width: 70px;
+            }
+            
+            .desktop-menu .category-icon {
+                font-size: 1.25rem;
+            }
+            
+            .desktop-menu .category-name {
+                font-size: 0.75rem;
+            }
+            
+            .desktop-menu .menu-item-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .desktop-menu .menu-item-price {
+                margin-left: 0;
+                align-self: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo"><img src="Images/Logo-removebg-preview.png" alt="The Kueen's Cafe Logo"></div>
+            <div class="nav-links">
+                <a href="#menu-slider-section">Menu</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#about">About Us</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <a href="#serving-on-section" class="order-button">Order Now</a>
+        </nav>
+    </header>
+    
+    <section class="hero" style="background: #fffde3; height: 100vh; display: flex; align-items: center; justify-content: center; padding: 0; margin-top: -2rem; position: relative;">
+      <div class="hero-logo" style="position: absolute; top: 50%; left:85%; transform: translate(-46%, -50%); width: 340px; height: 220px; background-color: var(--dark); border-radius: 50% 0 0 50%; padding: 0 20px 0 0; display: flex; align-items: center; justify-content: flex-end;">
+        <div style="width: 100%; height: 100%; background-image: url('Images/Logo-removebg-preview.png'); background-size: contain; background-position: center; background-repeat: no-repeat; opacity: 1; z-index: 1;"></div>
+      </div>
+      <div class="hero-content-modern" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; width: 100%; max-width: 1200px; margin: 0 auto; padding: 2.5rem 1rem 2.5rem 1rem; position: relative; z-index: 2;">
+        <div class="hero-text-modern" style="flex: 1 1 350px; min-width: 320px; max-width: 520px;">
+          <h1 style="font-size: 2.2rem; font-weight: 800; color: var(--dark); line-height: 1.2; margin-bottom: 1.2rem;">
+            Enjoy <br><span style="color: var(--primary); background: rgba(255, 107, 53, 0.1); border-radius: 0.3em; padding: 0 0.2em; font-size: 2.5rem;">Delicious Food</span><br>Right Next to You
+          </h1>
+          <div style="margin-bottom: 1.5rem; color: var(--dark); font-size: 1.1rem;">
+            <img src="Images/veg.png" alt="Veg" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;">
+            <span style="font-weight: 600; color: var(--primary);">100% veg food</span> crowned with deliciousness.
+          </div>
+          <a href="#serving-on-section" class="hero-order-btn-modern" style="display: inline-block; background: var(--primary); color: var(--light); font-weight: 700; font-size: 1.15rem; padding: 0.9rem 2.2rem; border-radius: 2.5em; text-decoration: none; box-shadow: 0 2px 12px rgba(255, 107, 53, 0.08); transition: background 0.2s;">Order Now</a>
+        </div>
+        <div class="hero-image-modern" style="flex: 1 1 320px; min-width: 280px; display: flex; align-items: center; justify-content: center; position: relative;">
+          <div class="main-image" style="position: relative; width: 320px; height: 320px; max-width: 90vw;">
+            <img src="Images/PIZZA L.png" alt="Healthy Food" style="width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 2;">
+            <!-- Decorative leaves without any effect -->
+            <img src="Images/leaf.png" alt="Leaf" style="position: absolute; left: -40px; top: 30px; width: 70px; opacity: 0.8; z-index: 2; background: none; box-shadow: none; border: none;" onerror="this.style.display='none'">
+            <img src="Images/leaf.png" alt="Leaf" style="position: absolute; right: -40px; bottom: 30px; width: 70px; opacity: 0.8; z-index: 2; transform: scaleX(-1); background: none; box-shadow: none; border: none;" onerror="this.style.display='none'">
+            <!-- Testimonial badge -->
+            <a href="https://maps.app.goo.gl/TXqnTN9tGrwE2UZV7" target="_blank" style="text-decoration: none;">
+            <div style="position: absolute; top: 280px; right: 155px; background: var(--light); border-radius: 2em; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 0.5em 1.1em 0.5em 0.5em; display: flex; align-items: center; gap: 0.7em; min-width: 120px;">
+              <img src="Images/vinod.webp" alt="User" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover; background: #eee;">
+              <div style="font-size: 0.88rem; color: var(--dark);">
+                <div style="font-weight: 700;">Vinod Sharma</div>
+                <div style="font-size: 0.75em; color: var(--primary); font-weight: 600;">Quality Food</div>
+              </div>
+            </div>
+            </a>
+            <!-- Add Review badge -->
+            <a href="https://maps.app.goo.gl/TXqnTN9tGrwE2UZV7" target="_blank" style="text-decoration: none;">
+              <div style="position: absolute; top: 280px; right: -10px; background: var(--light); border-radius: 2em; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 0.5em 1.1em 0.5em 0.5em; display: flex; align-items: center; gap: 0.7em; min-width: 120px; cursor: pointer; transition: transform 0.3s ease;">
+                <div style="width: 38px; height: 38px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; color: var(--light); font-size: 1.5rem; font-weight: bold;">+</div>
+                <div style="font-size: 0.88rem; color: var(--dark);">
+                  <div style="font-weight: 700;">Add Review</div>
+                  <div style="font-size: 0.75em; color: var(--primary); font-weight: 600;">Share your's</div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Serving On Section -->
+    <section id="serving-on-section" class="serving-on-section" style="background: var(--dark); padding: 2rem 0;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <h2 style="text-align: center; color: var(--primary); font-size: 2.3rem; font-weight: 800; margin-bottom: 2.2rem; letter-spacing: 1px;">Serving On</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; flex-wrap: nowrap; max-width: 900px; margin: 0 auto;">
+                <a href="https://zomato.onelink.me/xqzv/vgtu9hy8" target="_blank" style="text-decoration: none; flex: 1; display: flex; justify-content: center;">
+                    <img src="Images/zomato-logo.png" alt="Zomato" style="width: 100%; max-width: 180px; height: auto; transition: transform 0.3s ease;">
+                </a>
+                <a href="https://www.swiggy.com/menu/1100718?source=sharing" target="_blank" style="text-decoration: none; flex: 1; display: flex; justify-content: center;">
+                    <img src="Images/swiggy-logo.png" alt="Swiggy" style="width: 100%; max-width: 180px; height: auto; transition: transform 0.3s ease;">
+                </a>
+                <a href="https://gintaa.com/gintaa-food/resturant/rdetails/DSb2gAgLCmMgdsSnfjKoAUZwBLa2" target="_blank" style="text-decoration: none; flex: 1; display: flex; justify-content: center;">
+                    <img src="Images/gintaa-logo.png" alt="Gintaa" style="width: 100%; max-width: 180px; height: auto; transition: transform 0.3s ease;">
+                </a>
+                <a href="https://magicpin.in/walletRecharge?merchantId=54004030" target="_blank" style="text-decoration: none; flex: 1; display: flex; justify-content: center;">
+                    <img src="Images/magicpin-logo.png" alt="Magicpin" style="width: 100%; max-width: 180px; height: auto; transition: transform 0.3s ease;">
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Popular Dishes Section -->
+    <section class="popular-dishes-section" style="background: #fff7f3; padding: 3rem 0 2rem 0;">
+      <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+        <h2 style="text-align: center; color: var(--primary); font-size: 2.3rem; font-weight: 800; margin-bottom: 2.2rem; letter-spacing: 1px;">Popular Dishes</h2>
+        <div class="popular-dishes-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem;">
+          <div class="popular-dish-card" style="background: #fff; border-radius: 16px; box-shadow: 0 2px 12px rgba(255,107,53,0.07); padding: 1.2rem 1rem 1.5rem 1rem; display: flex; flex-direction: column; align-items: center;">
+            <img src="Images/TANDOORI PIZZA L.webp" alt="Margherita Pizza" style="width: 110px; height: 110px; object-fit: cover; border-radius: 50%; margin-bottom: 1rem; border: 4px solid var(--primary);">
+            <div style="font-size: 1.18rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">Tandoori Pizza</div>
+            <div style="color: #666; font-size: 0.98rem; margin-bottom: 0.7rem; text-align: center;">Classic pizza with mozzarella cheese and tangy tomato sauce.</div>
+            <div style="color: var(--primary); font-weight: bold; font-size: 1.08rem; background: rgba(255,107,53,0.08); padding: 0.3rem 1.2rem; border-radius: 20px;">₹99</div>
+          </div>
+          <div class="popular-dish-card" style="background: #fff; border-radius: 16px; box-shadow: 0 2px 12px rgba(255,107,53,0.07); padding: 1.2rem 1rem 1.5rem 1rem; display: flex; flex-direction: column; align-items: center;">
+            <img src="Images/DOUBLE CHEESE BURGER L.webp" alt="Double Cheese Burger" style="width: 110px; height: 110px; object-fit: cover; border-radius: 50%; margin-bottom: 1rem; border: 4px solid var(--primary);">
+            <div style="font-size: 1.18rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">Double Cheese Burger</div>
+            <div style="color: #666; font-size: 0.98rem; margin-bottom: 0.7rem; text-align: center;">Juicy burger with double cheese, fresh veggies, and special sauce.</div>
+            <div style="color: var(--primary); font-weight: bold; font-size: 1.08rem; background: rgba(255,107,53,0.08); padding: 0.3rem 1.2rem; border-radius: 20px;">₹129</div>
+          </div>
+          <div class="popular-dish-card" style="background: #fff; border-radius: 16px; box-shadow: 0 2px 12px rgba(255,107,53,0.07); padding: 1.2rem 1rem 1.5rem 1rem; display: flex; flex-direction: column; align-items: center;">
+            <img src="Images/MIX SAUCE PASTA L.webp" alt="White Sauce Pasta" style="width: 110px; height: 110px; object-fit: cover; border-radius: 50%; margin-bottom: 1rem; border: 4px solid var(--primary);">
+            <div style="font-size: 1.18rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">Mix Sauce Pasta</div>
+            <div style="color: #666; font-size: 0.98rem; margin-bottom: 0.7rem; text-align: center;">Creamy pasta tossed in rich white sauce with herbs and cheese.</div>
+            <div style="color: var(--primary); font-weight: bold; font-size: 1.08rem; background: rgba(255,107,53,0.08); padding: 0.3rem 1.2rem; border-radius: 20px;">₹149</div>
+          </div>
+          <div class="popular-dish-card" style="background: #fff; border-radius: 16px; box-shadow: 0 2px 12px rgba(255,107,53,0.07); padding: 1.2rem 1rem 1.5rem 1rem; display: flex; flex-direction: column; align-items: center;">
+            <img src="Images/VIRGIN MOJITO L.webp" alt="Virgin Mojito" style="width: 110px; height: 110px; object-fit: cover; border-radius: 50%; margin-bottom: 1rem; border: 4px solid var(--primary);">
+            <div style="font-size: 1.18rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">Virgin Mojito</div>
+            <div style="color: #666; font-size: 0.98rem; margin-bottom: 0.7rem; text-align: center;">Refreshing mint and lime mojito, perfect for summer days.</div>
+            <div style="color: var(--primary); font-weight: bold; font-size: 1.08rem; background: rgba(255,107,53,0.08); padding: 0.3rem 1.2rem; border-radius: 20px;">₹79</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modern Menu Section (Desktop Only) -->
+    <div class="desktop-menu">
+        <section class="menu-section" id="menu-slider-section">
+            <div class="section-container">
+                <h2 class="section-title">Our Menu</h2>
+                <p class="section-subtitle">Discover our delicious selection of fresh, handcrafted dishes</p>
+                <!-- Category Navigation -->
+                <div class="menu-categories">
+                    <button class="category-btn active" data-category="burgers">
+                        <span class="category-icon">🍔</span>
+                        <span class="category-name">Burgers</span>
+                    </button>
+                    <button class="category-btn" data-category="pizzas">
+                        <span class="category-icon">🍕</span>
+                        <span class="category-name">Pizzas</span>
+                    </button>
+                    <button class="category-btn" data-category="pasta">
+                        <span class="category-icon">🍝</span>
+                        <span class="category-name">Pasta & More</span>
+                    </button>
+                    <button class="category-btn" data-category="mojitos">
+                        <span class="category-icon">🥤</span>
+                        <span class="category-name">Drinks</span>
+                    </button>
+                    <button class="category-btn" data-category="combos">
+                        <span class="category-icon">🍟</span>
+                        <span class="category-name">Combos</span>
+                    </button>
+                </div>
+                <!-- Menu Items Grid -->
+                <div class="menu-grid" id="menu-grid">
+                    <!-- Menu items will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Old Menu Section (Mobile Only) -->
+    <div class="mobile-menu">
+        <section class="menu-modern-section" id="menu-slider-section-mobile">
+            <div class="menu-section-heading" style="width:100%;text-align:center;margin-bottom:1.2rem;">
+                <span class="menu-heading-text">Menu</span>
+            </div>
+            <div class="menu-sidebar" id="menu-sidebar">
+                <div class="menu-sidebar-title">Categories</div>
+                <button class="menu-category-btn" data-category="burgers"><span class="icon">🍔</span> <span class="cat-label">Burgers</span> <span class="cat-arrow">▼</span></button>
+                <div class="mobile-collapse" id="collapse-burgers"></div>
+                <button class="menu-category-btn" data-category="pizzas"><span class="icon">🍕</span> <span class="cat-label">Pizzas</span> <span class="cat-arrow">▼</span></button>
+                <div class="mobile-collapse" id="collapse-pizzas"></div>
+                <button class="menu-category-btn" data-category="pasta"><span class="icon">🍝</span> <span class="cat-label">Pasta & Sandwiches</span> <span class="cat-arrow">▼</span></button>
+                <div class="mobile-collapse" id="collapse-pasta"></div>
+                <button class="menu-category-btn" data-category="mojitos"><span class="icon">🥤</span> <span class="cat-label">Mojitos & Shakes</span> <span class="cat-arrow">▼</span></button>
+                <div class="mobile-collapse" id="collapse-mojitos"></div>
+                <button class="menu-category-btn" data-category="combos"><span class="icon">🍟</span> <span class="cat-label">Combos</span> <span class="cat-arrow">▼</span></button>
+                <div class="mobile-collapse" id="collapse-combos"></div>
+            </div>
+            <div class="menu-items-grid" id="menu-items-grid">
+                <!-- JS will fill this -->
+            </div>
+        </section>
+    </div>
+
+    <section id="how-it-works" class="how-it-works">
+        <div class="section-container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">📱</div>
+                    <h3>Order Online</h3>
+                    <p>Browse our menu and select your favorite dishes through <a href="#serving-on-section" style="color: var(--primary); text-decoration: none; font-weight: 500;">platforms</a> we are <a href="#serving-on-section" style="color: var(--primary); text-decoration: none; font-weight: 500;">serving</a>  on.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-icon">👨‍🍳</div>
+                    <h3>We Cook</h3>
+                    <p>Our chefs prepare your meal with fresh, high-quality ingredients in our specialized kitchen.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-icon">🚚</div>
+                    <h3>Fast Delivery</h3>
+                    <p>Your delicious meal is carefully packaged and delivered straight to your doorstep.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-icon">😋</div>
+                    <h3>Enjoy!</h3>
+                    <p>Unpack your meal, heat if necessary, and enjoy restaurant-quality food at home.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="testimonials">
+        <div class="section-container">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial">
+                    <div class="quote-icon">"</div>
+                    <p class="testimonial-text">I've been ordering from this cloud kitchen for a few weeks now, and I can confidently say it's been nothing short of fantastic. The online ordering system is smooth, delivery is on time, and the food is consistently delicious. It's perfect for busy days when you need something satisfying but don't want to compromise on quality!</p>
+                    <p class="testimonial-author">— 
+                        Shrishti Dhasmana </p>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="quote-icon">"</div>
+                    <p class="testimonial-text">Really tasty pizza and burger . bought pizza , burger and mojito from this cafe very neat and clean kitchen and good packaging
+                        Lovely i would like to order from this cafe.</p>
+                    <p class="testimonial-author">— Manika Mohapatra</p>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="quote-icon">"</div>
+                    <p class="testimonial-text">The best piza I ate forever...and the quality of burger is also A1 ...kueen,'s cafe is basically best piza maker ....</p>
+                    <p class="testimonial-author">— Saratchandra Senapati</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="about">
+        <div class="section-container">
+            <h2 class="section-title">About The Kueen's Cafe</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Real Food. Real Chefs. No Dining Room.</h2>
+                    <p>The Kueen's Cafe was founded in 2025 with a simple mission: to make restaurant-quality food accessible to everyone, every day.</p>
+                    <p>Unlike traditional restaurants, we operate from a specialized kitchen designed solely for delivery. This allows us to focus entirely on food quality and efficient delivery, without the overhead of a dining space.</p>
+                    <p>Our team of professional chefs crafts each dish with the same care and attention to detail you'd expect from a high-end restaurant. We source locally whenever possible and prioritize sustainable practices in our operations.</p>
+                    <p>We believe great food shouldn't be reserved for special occasions. With The Kueen's Cafe, it's just a click away, any day of the week.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact" class="contact">
+        <div class="section-container">
+            <h2 class="section-title">Get in Touch</h2>
+            <div class="contact-flex">
+                <div class="contact-info">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--dark);">Contact Information</h3>
+                    <div class="contact-method" style="margin-bottom: 1.2rem;">
+                        <div class="contact-icon" style="font-size: 1.2rem;">📞</div>
+                        <div>
+                            <p style="font-size: 1rem; margin-bottom: 0.2rem;">+91 956 003 5107</p>
+                            <p style="font-size: 0.9rem; color: #666;">Mon-Sun: 10am - 10pm</p>
+                        </div>
+                    </div>
+                    <div class="contact-method" style="margin-bottom: 1.2rem;">
+                        <div class="contact-icon" style="font-size: 1.2rem;">✉️</div>
+                        <div>
+                            <p style="font-size: 1rem; margin-bottom: 0.2rem;">thekueenscafe@gmail.com</p>
+                            <p style="font-size: 0.9rem; color: #666;">We respond within 24 hours</p>
+                        </div>
+                    </div>
+                    <div class="contact-method" style="margin-bottom: 1.2rem;">
+                        <div class="contact-icon" style="font-size: 1.2rem;">📍</div>
+                        <div>
+                            <p style="font-size: 1rem; margin-bottom: 0.2rem;">Indira Enclave, A-52, Block A 1, Neb Sarai, Sainik Farm</p>
+                            <p style="font-size: 0.9rem; color: #666; margin-bottom: 0.8rem;">New Delhi, Delhi 110068, India</p>
+                            <a href="https://maps.app.goo.gl/TXqnTN9tGrwE2UZV7" target="_blank" class="google-review-btn" style="display: inline-flex; align-items: center; gap: 0.5rem; background: var(--primary); color: var(--light); padding: 0.5rem 1rem; border-radius: 50px; text-decoration: none; font-size: 0.9rem; transition: background 0.3s ease;">
+                                <img src="Images/google-maps.png" alt="Google Maps" style="width: 20px; height: 20px; object-fit: contain;">
+                                Add a Review
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>The Kueen's Cafe</h4>
+                <p>Restaurant-quality food delivered to your door. Crafted with care, made with premium ingredients.</p>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/thekueenscafe" target="_blank" class="social-icon">
+                        <img src="Images/instagram.png" alt="Instagram" class="social-icon-img">
+                    </a>
+                    <a href="https://www.youtube.com/@TheKueensCafe" target="_blank" class="social-icon">
+                        <img src="Images/youtube.png" alt="YouTube" class="social-icon-img">
+                    </a>
+                    <a href="https://zomato.onelink.me/xqzv/vgtu9hy8" target="_blank" class="social-icon">
+                        <img src="Images/zomato-logo.png" alt="Zomato" class="social-icon-img">
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#menu-slider-section">Menu</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 The Kueen's Cafe. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+    // --- MENU DATA ---
+    const MENU_DATA = {
+      burgers: [
+        { name: 'Classic Veg Burger', price: 79, desc: 'Veg patty, onion, lettuce, tomato' },
+        { name: 'Paneer Peri Peri Burger', price: 149, desc: 'Peri peri masala marinated paneer patty, tomato, onion, lettuce, gherkins' },
+        { name: 'Double Cheese Double Patty Burger', price: 149, desc: '2 veg patty, tomato, onion, lettuce, cheese slice, gherkins' },
+        { name: 'Crunchy Aloo Tikki Burger', price: 59, desc: 'Tomato, onion, aloo patty with mayo' },
+        { name: 'Herb Chilli Burger', price: 129, desc: 'Herb chilly patty with lettuce, tomato, onion, chipotle sauce' },
+        { name: 'Cheese Bomb Burger', price: 149, desc: 'Herb chilly patty, creamy sauce, overloaded with onion, lettuce, tomato, cheese slice' },
+        { name: 'Desi Burger', price: 49, desc: 'Aloo patty, onion, green sauce, tomato with tandoori sauce' },
+      ],
+      pizzas: [
+        { name: 'Margherita', price: '79 / 99 / 199', desc: 'Pizza sauce and mozzarella cheese' },
+        { name: 'Farm House Special', price: '119 / 159 / 299', desc: 'Mushroom, corn, olive, capsicum, onion, herbs' },
+        { name: 'Veggie Delight', price: '119 / 169 / 329', desc: 'Onion, capsicum, sweet corn, tomato, cheese' },
+        { name: 'Tandoori Pizza', price: '149 / 169 / 329', desc: 'Onion, jalapeno, black olives, tomato, tandoori sauce, paneer, cheese' },
+        { name: 'Simply Veg Pizza', price: '99 / 149 / 299', desc: 'Onion, capsicum, tomato, cheese' },
+        { name: 'Golden Corn Pizza', price: '79 / 99 / 249', desc: 'Corn and cheese' },
+        { name: 'Exotic Pizza', price: '149 / 199 / 399', desc: 'Black olives, red/yellow bell peppers, jalapeno, tomato, cheese, onion, capsicum' },
+        { name: 'Kueens Da-Licious Pizza', price: '169 / 249 / 499', desc: 'Black olives, onion, mozzarella cheese, cheddar cheese, liquid cheese, red paprika' },
+        { name: 'Spicy Paneer Tikka Pizza', price: '149 / 199 / 399', desc: 'Marinated paneer, onion, jalapeno, red paprika, capsicum' },
+        { name: 'Onion Pizza', price: '79 / 99 / 249', desc: 'Onion and cheese' },
+        { name: 'Paneer Onion Pizza', price: '119 / 149 / 329', desc: 'Paneer, onion, liquid cheese' },
+        { name: 'Peppy Paneer', price: '129 / 169 / 399', desc: 'Crispy capsicum, red paprika, chunky paneer, cheese' },
+        { name: 'Mexican Fiesta Pizza', price: '169 / 229 / 399', desc: 'Jalapeno, corn, onion, chipotle drizzle' },
+        { name: 'Paneer Makhni Pizza', price: '129 / 179 / 399', desc: 'Paneer and capsicum on a base of makhani sauce' },
+      ],
+      pasta: [
+        { name: 'White Sauce Pasta', price: '149 / 239', desc: 'White sauce pasta with cheese' },
+        { name: 'Veg Tandoori Pasta', price: '169 / 239', desc: 'Tandoori sauce, penne pasta, red sauce, paneer chunks' },
+        { name: 'Arrabita Sauce Pasta', price: '149 / 249', desc: 'Arrabita sauce, penne pasta' },
+        { name: 'Mix Sauce Pasta', price: '149 / 249', desc: 'Mix of alfredo and red sauce, penne pasta' },
+        { name: 'Paneer Alfredo Pasta', price: '169 / 259', desc: 'Paneer cubes, alfredo sauce, penne pasta' },
+        { name: 'Creamy Mushroom Pasta', price: '169 / 249', desc: 'Mushroom pieces, cream, penne pasta, white sauce' },
+        { name: 'Red Sauce Pasta', price: '149 / 199', desc: 'Tomato based sauce, garlic, onion, herbs, spices' },
+        { name: 'Paneer Triangles (6 pcs)', price: 149, desc: 'Marinated paneer fried, peri peri sprinkle, cheese dip' },
+        { name: 'Veg Grill Sandwich', price: '89 / 129', desc: 'Grilled sandwich with mixed vegetables, herbs, cheese' },
+        { name: 'Veg Cheese Grill Sandwich', price: '129 / 149', desc: 'Spiced veggies, lots of cheese, grilled' },
+        { name: 'Veg Coleslaw Sandwich', price: '79 / 129', desc: 'Creamy coleslaw with cabbage, carrots, soft bread' },
+        { name: 'Paneer Grill Sandwich', price: '149 / 199', desc: 'Paneer cubes, onion, capsicum, cabbage, mayo, spicy sauce, grilled' },
+        { name: 'Paneer Grill Cheese Sandwich', price: '159 / 199', desc: 'Grilled paneer, capsicum, melted cheese, ketchup' },
+        { name: 'Cheesy Fries', price: '99 / 149', desc: 'Salted french fries with molten cheese' },
+        { name: 'French Fries Salted', price: '69 / 129', desc: 'Salted french fries' },
+        { name: 'French Fries Peri Peri', price: '79 / 139', desc: 'Salted french fries with peri peri masala' },
+        { name: 'Veg Wrap', price: '99 / 159', desc: 'Spiced veggies wrapped in a soft tortilla' },
+        { name: 'Paneer Wrap', price: '149 / 199', desc: 'Grilled paneer cubes, flavourful spices, wrapped' },
+        { name: 'Falafel Wrap', price: '149 / 249', desc: 'Middle eastern falafels, hummus, veggies, warm wrap' },
+        { name: 'Peri Peri Paneer Wrap', price: 199, desc: 'Spicy peri peri paneer, crunchy veggies, zesty wrap' },
+        { name: 'Garlic Bread Plain (6 pcs)', price: 79, desc: 'Roasted garlic bread in butter' },
+        { name: 'Garlic Bread Cheese (6 pcs)', price: 149, desc: 'Roasted garlic bread in butter with cheese, veggies' },
+        { name: 'Crispy Paneer Fingers (6 pcs)', price: 149, desc: 'Marinated paneer fried with cheese dip' },
+      ],
+      mojitos: [
+        { name: 'Hazelnut Cold Coffee', price: '149 / 189', desc: 'Hazelnut syrup with coffee frappe and milk in it' },
+        { name: 'Kitkat Shake', price: '139 / 169', desc: 'Creamy shake with real Kitkat chunks and chocolate drizzle' },
+        { name: 'Butterscotch Shake', price: '79 / 99', desc: 'Butterscotch with milk' },
+        { name: 'Kesar Mango', price: '139 / 169', desc: 'Refreshing shake made with fresh seasonal mangoes' },
+        { name: 'Iced Lemon Tea', price: '79 / 99', desc: 'Cool and refreshing lemon flavoured ice tea' },
+        { name: 'Nutella Shake', price: '149 / 169', desc: 'Nutella and milk fusion for a rich, nutty flavour' },
+        { name: 'Cold Coffee (Classic)', price: '149 / 189', desc: 'Smooth and chilled coffee blended with milk and sugar' },
+        { name: 'Green Apple Cooler', price: '79 / 149', desc: 'Green apple syrup with lemon and soda - sweet and tangy' },
+        { name: 'Virgin Mojito', price: '79 / 99', desc: 'Mint, lime, and soda blend - refreshing and fizzy' },
+        { name: 'Watermelon Sparkle', price: '79 / 149', desc: 'Fresh watermelon with soda and mint for a sparkling touch' },
+        { name: 'Blue Lagoon', price: '79 / 99', desc: 'Blue curacao base with lemon and soda - tropical punch' },
+        { name: 'Chocolate Overloaded', price: '149 / 249', desc: 'Triple chocolate treat - cocoa, choco chips, chocolate syrup' },
+        { name: 'Fruit Punch Mocktail', price: '129 / 169', desc: 'Mixed fruit flavour with a fizzy top - sweet and colorful' },
+        { name: 'Peach Tea', price: '79 / 149', desc: 'Peach ice tea with lemon and pudina' },
+        { name: 'Chocolate Shake', price: '139 / 169', desc: 'Rich chocolate blended with milk and cream' },
+        { name: 'Passion Fruit', price: '99 / 159', desc: 'Punch of passion fruit with soda and lemon with pudina' },
+        { name: 'Strawberry Shake', price: '139 / 169', desc: 'Classic pink shake with fresh strawberry essence' },
+        { name: 'Oreo Shake', price: '139 / 169', desc: 'Crushed Oreo cookies blended with vanilla ice cream' },
+      ],
+      combos: [
+        { name: 'Classic Veg Burger + Fries + Coke', price: 149, desc: 'Classic veg burger, fries, and coke' },
+        { name: 'Couple Combo', price: 449, desc: 'Classic burger(s), Salted Fries, Spicy Paneer/Kueen\'s (S), Coke (200ml), Da\'licious Pizza (6\"), Classic Veg burger, Strawberry/Classic cold coffee/Kesar Mango (330ml) any two, Coke' },
+        { name: 'White Sauce Pasta + Garlic Bread + Mango/Coke', price: 229, desc: 'White sauce pasta (S), garlic bread, Mango (330ml) any two, Coke' },
+        { name: 'Teen Combo', price: 369, desc: 'Plain (6 pcs), Coke (200ml), Tandoori Paneer (8\"), Fries cheesy (L), Nutella/Oreo/Kitkat/Chocolate (330ml) pick any one' },
+        { name: 'Pizza + Soft Drink', price: 129, desc: '6 inch pizza veggie, coke/sprite/fanta (small)' },
+        { name: 'Angel Combo', price: 349, desc: 'Exotic/Mexican Fiesta (8\"), Salted fries (S), Shake any one (330ml)' },
+        { name: 'Shake + Burger', price: 189, desc: 'Shake (small) (Kesar mango/strawberry/kitkat), Classic veg burger (small)' },
+        { name: 'Double Cheese Patty Burger + Fries + Mojito', price: 249, desc: 'Double cheese patty burger, French fries (S), Passion fruit mojito (330ml)' },
+        { name: '2 Mini Pizzas + 2 Coke', price: 209, desc: 'Onion/corn/margherita small (6\") pizza (one), Farm house/paneer onion pizza, 2x 200ml chilled coke' },
+        { name: 'Desi Burger + French Fries + Classic Mojito', price: 149, desc: 'Desi burger, small fries salted, Virgin mojito' },
+        { name: 'Pizza + Fries + Coke', price: 179, desc: 'Simply veg (6\") pizza, coke/sprite (small), fries (S)' },
+        { name: 'Pizza + French Fries + Mojito', price: 199, desc: 'Exotic (8\") pizza, fries (L), Hazelnut cold coffee (330ml) or Blue lagoon mojito (small), fries (S)' },
+        { name: 'Pizza + Fries + Shake', price: 239, desc: 'Simply veg/onion/corn (6\") pizza, Virgin/Blue lagoon mojito (small), fries (S)' },
+        { name: 'Veg Wrap (S) + Mojito', price: 169, desc: 'Veg wrap small, any mojito (330ml)' },
+        { name: 'Family Combo', price: 1299, desc: 'Exotic/peppy paneer/mexican fiesta (10\") (any two), French fries (Sated/peri peri) (L) any two, Chocolate/Strawberry/Kesar mango/Oreo (L) any two' },
+        { name: 'Paneer Wrap (10\") + Mojito (450ml)', price: 339, desc: 'Paneer wrap large, mojito large or ice tea lemon/peach' },
+      ]
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- RENDER FUNCTION FOR DESKTOP ---
+        function renderMenuGrid(category) {
+            const grid = document.querySelector('.desktop-menu .menu-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            MENU_DATA[category].forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'menu-item';
+                div.innerHTML = `
+                    <div class="menu-item-header">
+                        <div class="menu-item-title">${item.name}</div>
+                        <div class="menu-item-price">₹${item.price}</div>
+                    </div>
+                    <div class="menu-item-description">${item.desc}</div>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        // --- RENDER FUNCTION FOR MOBILE ---
+        function renderCollapse(category) {
+            let html = `<div class='menu-items-grid'>`;
+            MENU_DATA[category].forEach(item => {
+                html += `<div class='menu-card'>
+                    <div class='menu-card-title'>${item.name}</div>
+                    <div class='menu-card-desc'>${item.desc}</div>
+                    <div class='menu-card-price'>₹${item.price}</div>
+                </div>`;
+            });
+            html += `</div>`;
+            return html;
+        }
+
+        const desktopCategoryBtns = document.querySelectorAll('.desktop-menu .category-btn');
+        const mobileMenuBtns = document.querySelectorAll('.mobile-menu .menu-category-btn');
+
+        // --- Desktop Listeners ---
+        desktopCategoryBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                desktopCategoryBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                renderMenuGrid(this.getAttribute('data-category'));
+            });
+        });
+
+        // --- Mobile Listeners ---
+        function closeAllCollapses() {
+            document.querySelectorAll('.mobile-menu .mobile-collapse').forEach(c => {
+                c.classList.remove('active');
+                c.innerHTML = '';
+            });
+            document.querySelectorAll('.mobile-menu .menu-category-btn').forEach(b => {
+                b.classList.remove('active');
+                const arrow = b.querySelector('.cat-arrow');
+                if (arrow) arrow.textContent = '▼';
+            });
+        }
+
+        mobileMenuBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const cat = this.getAttribute('data-category');
+                const collapse = document.querySelector(`.mobile-menu #collapse-${cat}`);
+                const arrow = this.querySelector('.cat-arrow');
+                const isActive = collapse.classList.contains('active');
+                
+                if (isActive) {
+                    closeAllCollapses();
+                    return;
+                }
+                
+                closeAllCollapses();
+
+                collapse.innerHTML = renderCollapse(cat);
+                collapse.classList.add('active');
+                this.classList.add('active');
+                if (arrow) arrow.textContent = '▲';
+            });
+        });
+
+        // --- Handle Initial View and Resize ---
+        let lastView = '';
+        function handleView() {
+            const currentView = window.matchMedia('(min-width: 769px)').matches ? 'desktop' : 'mobile';
+            if (currentView === lastView) {
+                return;
+            }
+            lastView = currentView;
+
+            if (currentView === 'desktop') {
+                const currentActive = document.querySelector('.desktop-menu .category-btn.active') || document.querySelector('.desktop-menu .category-btn[data-category="burgers"]');
+                currentActive.classList.add('active');
+                renderMenuGrid(currentActive.getAttribute('data-category'));
+            } else {
+                closeAllCollapses();
+            }
+        }
+        
+        handleView();
+        window.addEventListener('resize', handleView);
+    });
+    </script>
+</body>
+</html>
